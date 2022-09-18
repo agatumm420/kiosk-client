@@ -1,7 +1,8 @@
 {
     "private": true,
+    "dev": "NODE_ENV=development ENV_FILE=./.env node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "scripts": {
-        "dev": "npm run development",
+        "dev": "NODE_ENV=development ENV_FILE=./.env && npm run development ",
         "development": "mix",
         "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
@@ -16,5 +17,9 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "pusher-js": "^7.4.0"
+    },
+    "dependencies": {
+        "mix-env-file": "^0.1.1",
+        "socket.io-client": "^4.5.2"
     }
 }

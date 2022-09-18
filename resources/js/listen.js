@@ -1,18 +1,24 @@
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 
-
+console.log('Im at the start')
 window.Pusher = Pusher;
-
+console.log('Im at the start')
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: 'local',
-    wsHost: 'http://127.0.0.1:8001',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    // wsHost: process.env.APP_WEBSOCKET_SERVER,
+    wsHost: '127.0.0.1',
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     wsPort: 6001,
+    forceTLS:false,
     disableStats: true,
-    encrypted: true,
+    enabledTransports: ['ws', 'wss']
+
 });
-window.Echo.channel('{{env(DISPLAY_NAME)}}').listen('.PrintSend', ($json)=>{
+console.log('I m close')
+window.Echo.channel('display1').listen('.print.send', (e)=>{
+    console.log("i m here");
     async function postData(url , data ) {
         // Default options are marked with *
         const response = await fetch(url, {
@@ -30,5 +36,6 @@ window.Echo.channel('{{env(DISPLAY_NAME)}}').listen('.PrintSend', ($json)=>{
         });
         return response.json(); // parses JSON response into native JavaScript objects
       }
-    postData('http://127.0.0.1:8000/api/print', $json);
-})
+    $res= postData('http://127.0.0.1:8001/api/print', e.data);
+    console.log($res);
+});

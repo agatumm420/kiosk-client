@@ -19,7 +19,7 @@ define('LARAVEL_START', microtime(true));
 if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
     require $maintenance;
 }
-echo '<script type="text/javascript" src="{{asset(`listen.js`)}}" defer> </script>';
+// echo '<script type="text/javascript" src="{{asset(`listen.js`)}}" defer> </script>';
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
