@@ -1,6 +1,7 @@
 {
     "private": true,
     "dev": "NODE_ENV=development ENV_FILE=./.env node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "proxy":"http://localhost:8001",
     "scripts": {
         "dev": "NODE_ENV=development ENV_FILE=./.env && npm run development ",
         "development": "mix",

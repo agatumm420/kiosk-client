@@ -17,25 +17,46 @@ window.Echo = new Echo({
 
 });
 console.log('I m close')
-window.Echo.channel('display1').listen('.print.send', (e)=>{
+window.Echo.channel('display1').listen('.print.send',  (e)=>{
     console.log("i m here");
-    async function postData(url , data ) {
+     function postData(url , data ) {
+      return new Promise((resolve, reject) =>{
+        console.log(JSON.stringify({
+            'data':{
+                'display_id':e.data.display_id,
+                'file_name':e.data.file_name,
+                'html':e.data.html
+            }
+        }));
         // Default options are marked with *
-        const response = await fetch(url, {
+        fetch(url, {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, *cors, same-origin
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'same-origin', // include, *same-origin, omit
+
           headers: {
             'Content-Type': 'application/json'
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
-          redirect: 'follow', // manual, *follow, error
-          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-          body: data,// body data type must match "Content-Type" header
+          // body:data,
+          body: JSON.stringify({
+            'data':{
+                'display_id':e.data.display_id,
+                'file_name':e.data.file_name,
+                'html':e.data.html
+            }
+          }),
+        // body data type must match "Content-Type" header
         });
-        return response.json(); // parses JSON response into native JavaScript objects
+      }).then((response) => response.json()
+      .then((res) => {
+      resolve(res);
+      }))
+      .catch((error) => {
+      console.log(error)
+      });
+
+         // parses JSON response into native JavaScript objects
       }
-    $res= postData('http://127.0.0.1:8001/api/print', e.data);
-    console.log($res);
+      //Livewire.emit()
+    postData('/api/print', e).then((result) => {console.log(result);});
+
 });
