@@ -8,7 +8,7 @@
         "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
-        "prod": "npm run production",
+        "prod": "NODE_ENV=production ENV_FILE=./.env  && npm run production",
         "production": "mix --production"
     },
     "devDependencies": {
