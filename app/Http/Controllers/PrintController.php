@@ -22,7 +22,7 @@ class PrintController extends Controller
         $printerId=Printing::defaultPrinterId();
         $printJob =Printing::driver('cups')
         ->newPrintTask()
-        ->printer('40')
+        ->printer('45')
         ->file(public_path().'/storage/'.$decoded['file_name'].'.pdf')
         ->send();
         return response()->json([
