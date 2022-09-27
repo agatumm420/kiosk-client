@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Rawilk\Printing\Facades\Printing;
 use Rawilk\Printing\Contracts\Driver;
-use Rawilk\Printing\Contracts\Printer;
+use Rawilk\Printing\Drivers\Cups\Entity\Printer;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 

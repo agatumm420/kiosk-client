@@ -8,16 +8,16 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     // wsHost: process.env.APP_WEBSOCKET_SERVER,
-    wsHost: '127.0.0.1',
+    wsHost: 'http://ws.galaxy-centrum.pl/laravel-websockets',
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    wsPort: 6001,
+    wsPort: 6002,
     forceTLS:false,
     disableStats: true,
     enabledTransports: ['ws', 'wss']
 
 });
 console.log('I m close')
-window.Echo.channel('display1').listen('.print.send',  (e)=>{
+window.Echo.channel(process.env.CHANNEL).listen('.print.send',  (e)=>{
     console.log("i m here");
      function postData(url , data ) {
       return new Promise((resolve, reject) =>{
