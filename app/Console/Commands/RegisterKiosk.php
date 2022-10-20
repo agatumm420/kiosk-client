@@ -39,7 +39,7 @@ class RegisterKiosk extends Command
      */
     public function handle()
     {
-        $response=Http::post('http://ws.galaxy-centrum.pl/register',['data'=>[
+        $response=Http::post('https://ws.galaxy-centrum.pl/api/register',['data'=>[
             'channel'=>env('CHANNEL'),
             'name'=>Str::uuid(),
             'print'=>false,

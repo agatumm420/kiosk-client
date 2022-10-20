@@ -8,6 +8,8 @@ use Rawilk\Printing\Contracts\Driver;
 use Rawilk\Printing\Drivers\Cups\Entity\Printer;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class PrintController extends Controller
 {
@@ -20,15 +22,27 @@ class PrintController extends Controller
         // $driver=new Driver();
         // $printing= new Printing($driver, '40');
         $printerId=Printing::defaultPrinterId();
-        $printJob =Printing::driver('cups')
-        ->newPrintTask()
-        ->printer('45')
-        ->file(public_path().'/storage/'.$decoded['file_name'].'.pdf')
-        ->send();
-        return response()->json([
-            'data'=>[
-                'hello'=>'world'
-            ]
-            ]);
+        $printerStatus=Printing::driver('cups')->printer('45')->status();
+        if($printerStatus=='enabled'||$printerStatus=='idle' || $printerStatus=='accepting'){
+            $printJob =Printing::driver('cups')
+            ->newPrintTask()
+            ->printer('45')
+            ->file(public_path().'/storage/'.$decoded['file_name'].'.pdf')
+            ->send();
+            $response=Http::get('https://ws.galaxy-centrum.pl/api/stop_print/'.$decoded['file_id']);
+            return response()->json([
+                'data'=>[
+                    'hello'=>'world'
+                ]
+                ]);
+        }
+        else{
+            //Log::emergency('Printer disabled');
+            $response=Http::get('https://ws.galaxy-centrum.pl/api/printer_error/'.$printerStatus);
+        }
+
+
+
+
     }
 }
